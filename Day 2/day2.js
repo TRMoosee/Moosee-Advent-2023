@@ -18,12 +18,36 @@ function main() {
     for (let i = 0; i < inputArray.length; i++) {
         // Split this game into its individual bags
         let listOfBags = inputArray[i].split(": ")[1].split("; ")
+        let isValid = true;
+
         // Look through each bag and determine if that game is possible
-        // for (let j = 0; j < listOfBags[i].length; j++) {
-        //     let bag = listOfBags[i].split(", ")[j]
-        //     console.log(bag)
-        // }
+        for (let j = 0; j < listOfBags.length; j++) {
+            let elementsInBag = listOfBags[j].split(", ")
+
+            let violation = false;
+            for (let k = 0; k < elementsInBag.length; k++) {
+              let number = elementsInBag[k].split(" ")[0]
+              let text = elementsInBag[k].split(" ")[1]
+
+              switch(text) {
+                case "red": if (number > 12) {violation = true; break}
+                case "green": if (number > 13) {violation = true; break}
+                case "blue": if (number > 14) {violation = true; break}
+              }
+            }
+
+            if (violation) {
+                isValid = false
+                break
+            }
+        }
+
+        if (isValid) {
+          gameSum += i + 1;
+        }
     }
+
+    console.log(gameSum);
 }
 
 main()
